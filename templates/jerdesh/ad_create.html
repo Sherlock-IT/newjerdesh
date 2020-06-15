@@ -1,5 +1,4 @@
 {% load static %}
-<!-- {% load crispy_forms_tags %} -->
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -10,14 +9,15 @@
 </head>
 <body>
 	
-	<form action="{% url 'jerdesh:ad_create_url' %}" method="post" enctype="multipart/form-data">
+	<form action="" method="post" enctype="multipart/form-data">
 		{% csrf_token %}
 
 		<div class="form-group">
-			{% for field in form %}
-				{{ field.label }}
-				{{ field }}
-			{% endfor %}
+			{{ form.category }}
+			{{ form.city }}
+			{{ form.ad_title }}
+			{{ form.ad_text }}
+			{{ form.img }}
 		</div>
 
 		<button type="submit" class="btn btn-primary">Создать объявление</button>

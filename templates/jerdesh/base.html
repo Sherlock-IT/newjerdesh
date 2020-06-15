@@ -72,9 +72,9 @@
                                     </div>
                                     <div class="d-none d-lg-block">
                                         {% if request.user.is_authenticated %}
-                                            <a class="boxed-btn3" href="#">Добавить объявление</a>
+                                            <a class="boxed-btn3" href="{% url 'jerdesh:ad_create_url' %}">Добавить объявление</a>
                                         {% else %}
-                                            <a class="boxed-btn3" href="#">Добавить объявление</a>
+                                            <a class="boxed-btn3" href="{% url 'users:user_registration_url' %}">Добавить объявление</a>
                                         {% endif %}
                                     </div>
                                 </div>

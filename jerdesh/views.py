@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic import View
+from django.views.generic.edit import CreateView
 from django.db.models import Q
 from django.core.paginator import Paginator
 
@@ -57,6 +59,19 @@ class AdList(View):
 			'prev_url': prev_url
 		}
 		return render(request, 'jerdesh/ads_list.html', context)
+
+
+# CRUD
+class AdCreate(CreateView):
+	model = Ad
+	template_name = 'jerdesh/ad_create.html'
+	fields = ['category', 'city', 'ad_title', 'ad_text', 'img']
+
+	def form_valid(self, form):
+		new_ad = form.save(commit=False)
+		new_ad.author = self.request.user
+		new_ad.save()
+		return super().form_valid(form)
 
 
 class AdDetails(View):

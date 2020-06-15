@@ -23,12 +23,12 @@ class UserRegistrationForm(UserCreationForm):
 
 		self.fields['username'].widget.attrs['class'] 		= 'input-text'
 		self.fields['username'].widget.attrs['id'] 			= 'full-name'
-		self.fields['username'].widget.attrs['placeholder'] 	= 'Логин'
+		self.fields['username'].widget.attrs['placeholder'] = 'Логин'
 
-		self.fields['password1'].widget.attrs['class'] 		= 'input-text'
+		self.fields['password1'].widget.attrs['class'] 			= 'input-text'
 		self.fields['password1'].widget.attrs['id'] 			= 'password'
 		self.fields['password1'].widget.attrs['placeholder'] 	= 'Пароль'
 
-		self.fields['password2'].widget.attrs['class'] = 'input-text'
-		self.fields['password2'].widget.attrs['id'] = 'comfirm-password'
-		self.fields['password2'].widget.attrs['placeholder'] = 'Повторите пароль'
+		self.fields['password2'].widget.attrs['class'] 			= 'input-text'
+		self.fields['password2'].widget.attrs['id'] 			= 'comfirm-password'
+		self.fields['password2'].widget.attrs['placeholder'] 	= 'Повторите пароль'
