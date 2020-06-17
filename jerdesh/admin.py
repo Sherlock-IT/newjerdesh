@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils import timezone
 from .models import Category, City, Ad
 
-# Register your models here.
+
 admin.site.register(Category)
 admin.site.register(City)
 
@@ -10,4 +10,4 @@ admin.site.register(City)
 class AdAdmin(admin.ModelAdmin):
 	now = timezone.now()
 	list_display = ['ad_title', 'ad_text', 'author', 'category', 'city', 'img', 'pub_date']
-	prepopulated_fields = {'slug': ('ad_title', 'author')}
+	# prepopulated_fields = {'slug': ('ad_title', 'author')}

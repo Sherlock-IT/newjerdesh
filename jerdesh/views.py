@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
+from django.utils.text import slugify
 from django.urls import reverse_lazy
 from django.views.generic import View
 from django.views.generic.edit import CreateView
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Category, City, Ad
 
@@ -66,12 +68,21 @@ class AdCreate(CreateView):
 	model = Ad
 	template_name = 'jerdesh/ad_create.html'
 	fields = ['category', 'city', 'ad_title', 'ad_text', 'img']
+	success_url = reverse_lazy('jerdesh:ads_list_url')
+
+	def get_form(self, form_class=None):
+		form = super(AdCreate, self).get_form(form_class)
+		form.fields['ad_title'].widget.attrs['placeholder'] = 'Название объявления'
+		form.fields['ad_text'].widget.attrs['placeholder'] = 'Описание объявления'
+		form.fields['img'].widget.attrs['class'] = 'custom-file-input'
+		return form
 
 	def form_valid(self, form):
-		new_ad = form.save(commit=False)
+		new_ad = form.save()
+		new_ad.slug = f'{new_ad.ad_title}-{new_ad.id}'
 		new_ad.author = self.request.user
 		new_ad.save()
-		return super().form_valid(form)
+		return super(AdCreate, self).form_valid(form)
 
 
 class AdDetails(View):

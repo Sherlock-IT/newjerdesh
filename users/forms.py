@@ -5,10 +5,6 @@ from .models import Account
 
 
 class UserRegistrationForm(UserCreationForm):
-	# email 			= forms.EmailField(max_length=60, help_text='Введите корректный email адрес')
-	# username 		= forms.CharField(max_length=30)
-	# password1 		= forms.CharField(widget=forms.PasswordInput())
-	# password2 		= forms.CharField(widget=forms.PasswordInput())
 
 	class Meta:
 		model = Account

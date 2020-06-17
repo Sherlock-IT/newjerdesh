@@ -28,6 +28,9 @@ class Ad(models.Model):
 	img 				= models.ImageField(upload_to='images', blank=True)
 	pub_date 			= models.DateTimeField(auto_now=True)
 
+	def __str__(self):
+		return self.ad_text
+
 	def get_absolute_url(self):
 		return reverse('jerdesh:ad_details_url', kwargs={'slug': self.slug})
 
