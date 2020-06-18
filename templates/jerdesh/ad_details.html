@@ -76,6 +76,7 @@
                         <ul>
                             <li>Дата публикации: <span>{{ ad.pub_date }}</span></li>
                             <li>Местоположение: <span>{{ ad.city }}</span></li>
+                            <a href="{% url 'jerdesh:ad_delete_url' ad.slug %}">Delete</a>
                         </ul>
                     </div>
                 </div>

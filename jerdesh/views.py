@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
 from django.urls import reverse_lazy
 from django.views.generic import View
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -68,7 +68,6 @@ class AdCreate(CreateView):
 	model = Ad
 	template_name = 'jerdesh/ad_create.html'
 	fields = ['category', 'city', 'ad_title', 'ad_text', 'img']
-	success_url = reverse_lazy('jerdesh:ads_list_url')
 
 	def get_form(self, form_class=None):
 		form = super(AdCreate, self).get_form(form_class)
@@ -79,10 +78,22 @@ class AdCreate(CreateView):
 
 	def form_valid(self, form):
 		new_ad = form.save()
-		new_ad.slug = f'{new_ad.ad_title}-{new_ad.id}'
+		new_ad.slug = '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
 		new_ad.author = self.request.user
 		new_ad.save()
 		return super(AdCreate, self).form_valid(form)
+
+
+class AdUpdate(UpdateView):
+	model = Ad
+	template_name = 'jerdesh/ad_update.html'
+	fields = ['category', 'city', 'ad_title', 'ad_text', 'img']
+
+
+class AdDelete(DeleteView):
+	model = Ad
+	template_name = 'jerdesh/ad_delete.html'
+	success_url = reverse_lazy('jerdesh:ads_list_url')
 
 
 class AdDetails(View):
