@@ -15,7 +15,7 @@
                                 <img src="{{ ad.img.url }}" alt="" width="60" height="60">
                             </div>
                             <div class="jobs_conetent">
-                                <a href="#"><h4>{{ ad.ad_title }}</h4></a>
+                                <h4>{{ ad.ad_title }}</h4>
                                 <div class="links_locat d-flex align-items-center">
                                     <div class="location">
                                         <p> <i class="fa fa-map-marker"></i>{{ ad.city }}</p>
@@ -76,7 +76,6 @@
                         <ul>
                             <li>Дата публикации: <span>{{ ad.pub_date }}</span></li>
                             <li>Местоположение: <span>{{ ad.city }}</span></li>
-                            <a href="{% url 'jerdesh:ad_delete_url' ad.slug %}">Delete</a>
                         </ul>
                     </div>
                 </div>

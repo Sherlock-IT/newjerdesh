@@ -1,3 +1,4 @@
+from django import forms
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
@@ -8,7 +9,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Category, City, Ad
+from .models import Category, City, Ad, AdImage
 
 
 class IndexPage(View):
@@ -73,6 +74,7 @@ class AdCreate(CreateView):
 		form = super(AdCreate, self).get_form(form_class)
 		form.fields['ad_title'].widget.attrs['placeholder'] = 'Название объявления'
 		form.fields['ad_text'].widget.attrs['placeholder'] = 'Описание объявления'
+		form.fields['img'].widget = forms.FileInput(attrs={'multiple': 'multiple'})
 		form.fields['img'].widget.attrs['class'] = 'custom-file-input'
 		return form
 
@@ -80,6 +82,8 @@ class AdCreate(CreateView):
 		new_ad = form.save()
 		new_ad.slug = '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
 		new_ad.author = self.request.user
+		for image in self.request.FILES.getlist('img'):
+			AdImage.objects.create(ad=new_ad, img=image)
 		new_ad.save()
 		return super(AdCreate, self).form_valid(form)
 
@@ -88,6 +92,12 @@ class AdUpdate(UpdateView):
 	model = Ad
 	template_name = 'jerdesh/ad_update.html'
 	fields = ['category', 'city', 'ad_title', 'ad_text', 'img']
+
+	def form_valid(self, form):
+		new_ad = form.save()
+		new_ad.slug = '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
+		new_ad.save()
+		return super(AdUpdate, self).form_valid(form)
 
 
 class AdDelete(DeleteView):
@@ -99,4 +109,5 @@ class AdDelete(DeleteView):
 class AdDetails(View):
 	def get(self, request, slug):
 		ad = Ad.objects.get(slug__iexact=slug)
-		return render(request, 'jerdesh/ad_details.html', {'ad': ad})
+		images = AdImage.objects.filter(ad=ad)
+		return render(request, 'jerdesh/ad_details.html', {'ad': ad, 'images': images})
