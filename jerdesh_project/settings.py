@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'jerdesh.apps.JerdeshConfig',
     'users.apps.UsersConfig',
 
-    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

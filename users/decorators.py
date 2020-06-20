@@ -7,6 +7,6 @@ def unauthenticated_user(view_func):
         if request.user.is_authenticated:
             return view_func(request, *args, **kwargs)
         else:
-            return HttpResponse('Вы не можете просматривать данную страницу')
+            return HttpResponse('Зарегистрируйтесь или войдите в аккаунт, что бы просматривать данную страницу.')
         return view_func(request, *args, **kwargs)
     return wrapper_func

@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
+from jerdesh.models import Ad
 from .forms import UserRegistrationForm
 from .decorators import unauthenticated_user
 
@@ -47,4 +48,5 @@ def userLogout(request):
 
 @unauthenticated_user
 def userAdmin(request):
-	return render(request, 'users/index.html', {})
+	ads = Ad.objects.filter(author=request.user)
+	return render(request, 'users/index.html', {'ads': ads})
