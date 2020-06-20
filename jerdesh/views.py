@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Category, City, Ad, AdImage
+from .models import Category, SubCategory, City, Ad, AdImage
 
 
 class IndexPage(View):
@@ -28,17 +28,14 @@ class IndexPage(View):
 class AdList(View):
 	def get(self, request):
 		search_title 	= request.GET.get('search', '')
-		search_city 	= request.GET.get('location', '')
-		search_category = request.GET.get('category', '')
 
-		if search_title or search_city or search_category:
-			ads = Ad.objects.filter(Q(ad_title__icontains=search_title) | Q(city__city_text=search_city) | Q(category__category_text=search_category))
+		if search_title:
+			ads = Ad.objects.filter(ad_title__icontains=search_title)
 		else:
 			ads = Ad.objects.all()
 
 		cities 			= City.objects.all()
-		categories 		= Category.objects.all()
-		paginator 		= Paginator(ads, 10)
+		paginator 		= Paginator(ads, 5)
 		page_number 	= request.GET.get('page', 1)
 		page 			= paginator.get_page(page_number)
 		is_paginated 	= page.has_other_pages()
@@ -54,8 +51,6 @@ class AdList(View):
 			next_url = ''
 
 		context = {
-			'cities': cities,
-			'categories': categories,
 			'ads': page,
 			'is_paginated': is_paginated,
 			'next_url': next_url,
@@ -66,9 +61,9 @@ class AdList(View):
 
 # CRUD
 class AdCreate(CreateView):
+	subcategories = SubCategory.objects.all()
 	model = Ad
-	template_name = 'jerdesh/ad_create.html'
-	fields = ['category', 'city', 'ad_title', 'ad_text', 'img']
+	fields = ['city', 'ad_title', 'ad_text', 'img']
 
 	def get_form(self, form_class=None):
 		form = super(AdCreate, self).get_form(form_class)
@@ -78,6 +73,11 @@ class AdCreate(CreateView):
 		form.fields['img'].widget.attrs['class'] = 'custom-file-input'
 		return form
 
+	def get_context_data(self, **kwargs):
+		ctx = super(AdCreate, self).get_context_data(**kwargs)
+		ctx['subcategories'] = self.subcategories
+		return ctx
+		
 	def form_valid(self, form):
 		new_ad = form.save()
 		new_ad.slug = '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
@@ -89,9 +89,14 @@ class AdCreate(CreateView):
 
 
 class AdUpdate(UpdateView):
+	subcategories = SubCategory.objects.all()
 	model = Ad
-	template_name = 'jerdesh/ad_update.html'
-	fields = ['category', 'city', 'ad_title', 'ad_text', 'img']
+	fields = ['city', 'ad_title', 'ad_text', 'img']
+
+	def get_context_data(self, **kwargs):
+		ctx = super(AdUpdate, self).get_context_data(**kwargs)
+		ctx['subcategories'] = self.subcategories
+		return ctx
 
 	def form_valid(self, form):
 		new_ad = form.save()

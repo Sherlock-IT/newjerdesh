@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
 from .forms import UserRegistrationForm
+from .decorators import unauthenticated_user
 
 
 def userAuthorization(request):
@@ -42,3 +43,8 @@ def userRegistration(request):
 def userLogout(request):
 	logout(request)
 	return redirect('jerdesh:index_url')
+
+
+@unauthenticated_user
+def userAdmin(request):
+	return render(request, 'users/index.html', {})

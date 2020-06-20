@@ -11,27 +11,7 @@
             <div class="row cat_search">
                 <div class="col-lg-3 col-md-4">
                     <div class="single_input">
-                        <input type="text" placeholder="Ключевое слово" name="search">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="single_input">
-                        <select class="wide" name="location">
-                            <option data-display="Местоположение">Местоположение</option>
-                            {% for city in cities %}
-                                <option value="{{ city }}">{{ city }}</option>
-                            {% endfor %}
-                          </select>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="single_input">
-                        <select class="wide" name="category">
-                            <option data-display="Категории">Категории</option>
-                            {% for category in categories %}
-                            <option value="{{ category }}">{{ category }}</option>
-                            {% endfor %}
-                        </select>
+                        <input type="text" placeholder="Ключевое слово" name="search" required>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-12">

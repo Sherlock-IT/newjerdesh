@@ -1,22 +1,21 @@
-{% extends 'jerdesh/base.html' %}
 {% load static %}
-
-{% block head %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Jerdesh</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'jerdesh/crud/css/main.css' %}">
-	<!--===============================================================================================-->
-{% endblock %}
+	<link rel="stylesheet" href="{% static 'jerdesh/css/bootstrap.min.css' %}">
+</head>
 
-{% block content %}
-<br>
-<br>
-<br>
-<br>
+<body>
 	<div class="container" id="cont">
 		<form method="post" enctype="multipart/form-data">
 			{% csrf_token %}
 			<div class="custom-file">
 				{{ form.img }}
-				<label class="custom-file-label" for="customFile">Добавить изображени</label>
+				<label class="custom-file-label">Добавить изображени</label>
 			</div>
 			<div class="row">
 				<div class="col-25">
@@ -24,8 +23,10 @@
 				</div>
 				<div class="col-75">
 					<select id="category" name="category">
-						{% for category in form.category %}
-							{{ category }}
+						{% for category in subcategories %}
+							<optgroup label="{{ category.category }}">
+								<option value="{{ category.id }}">{{ category.subcategory_text }}</option>
+							</optgroup>
 						{% endfor %}
 					</select>
 				</div>
@@ -62,6 +63,8 @@
 				<input type="submit" value="Submit">
 			</div>
 		</form>
+		{{form.errors}}
 	</div>
-<br>
-{% endblock %}
+
+</body>
+</html>

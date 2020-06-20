@@ -11,6 +11,14 @@ class Category(models.Model):
 		return self.category_text
 
 
+class SubCategory(models.Model):
+	category = models.ForeignKey(Category, on_delete=models.CASCADE)
+	subcategory_text = models.CharField(max_length=100)
+
+	def __str__(self):
+		return self.subcategory_text
+
+
 class City(models.Model):
 	city_text = models.CharField(max_length=200)
 
@@ -19,13 +27,13 @@ class City(models.Model):
 
 
 class Ad(models.Model):
-	category 			= models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-	city 				= models.ForeignKey(City, on_delete=models.CASCADE, null=True)
-	author 				= models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+	category 			= models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True)
+	city 				= models.ForeignKey(City, on_delete=models.CASCADE, null=True, verbose_name='Город')
+	author 				= models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Автор')
 	slug 				= models.SlugField(max_length=250, unique_for_date='pub_date')
 	ad_title 			= models.CharField(max_length=200, verbose_name='Название')
 	ad_text 			= models.TextField(verbose_name='Описание')
-	img 				= models.ImageField(blank=True)
+	img 				= models.ImageField()
 	pub_date 			= models.DateTimeField(auto_now=True)
 
 	def __str__(self):
@@ -41,6 +49,3 @@ class Ad(models.Model):
 class AdImage(models.Model):
 	ad 					= models.ForeignKey(Ad, on_delete=models.CASCADE, default=None)
 	img 				= models.ImageField(upload_to='images/')
-
-	def __str__(self):
-		return self.img.url
