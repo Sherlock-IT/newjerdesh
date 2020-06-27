@@ -27,13 +27,14 @@ class City(models.Model):
 
 
 class Ad(models.Model):
-	category 			= models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True)
+	category 			= models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True, verbose_name='Категория')
 	city 				= models.ForeignKey(City, on_delete=models.CASCADE, null=True, verbose_name='Город')
 	author 				= models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Автор')
+	favorite			= models.ManyToManyField(User, blank=True, related_name='favorite', verbose_name='Избранное')
 	slug 				= models.SlugField(max_length=250, unique_for_date='pub_date')
 	ad_title 			= models.CharField(max_length=200, verbose_name='Название')
 	ad_text 			= models.TextField(verbose_name='Описание')
-	img 				= models.ImageField()
+	img 				= models.ImageField(upload_to='images/')
 	pub_date 			= models.DateTimeField(auto_now=True)
 
 	def __str__(self):

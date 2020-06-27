@@ -1,6 +1,6 @@
 from django import forms
 from django.shortcuts import render
-from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect
 from django.utils.text import slugify
 from django.urls import reverse_lazy
 from django.views.generic import View
@@ -35,7 +35,7 @@ class AdList(View):
 			ads = Ad.objects.all()
 
 		cities 			= City.objects.all()
-		paginator 		= Paginator(ads, 5)
+		paginator 		= Paginator(ads, 10)
 		page_number 	= request.GET.get('page', 1)
 		page 			= paginator.get_page(page_number)
 		is_paginated 	= page.has_other_pages()
@@ -115,4 +115,23 @@ class AdDetails(View):
 	def get(self, request, slug):
 		ad = Ad.objects.get(slug__iexact=slug)
 		images = AdImage.objects.filter(ad=ad)
-		return render(request, 'jerdesh/ad_details.html', {'ad': ad, 'images': images})
+		is_favorite = False
+
+		if ad.favorite.filter(id=request.user.id).exists():
+			is_favorite = True
+
+		context = {
+			'ad': ad,
+			'images': images,
+			'is_favorite': is_favorite,
+		}
+		return render(request, 'jerdesh/ad_details.html', context)
+
+	
+def favoriteAd(request, slug):
+	ad = Ad.objects.get(slug__iexact=slug)
+	if ad.favorite.filter(id=request.user.id).exists():
+		ad.favorite.remove(request.user)
+	else:
+		ad.favorite.add(request.user)
+	return redirect(ad.get_absolute_url())

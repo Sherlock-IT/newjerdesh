@@ -517,31 +517,31 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-9">
-                                <h2 class="title-1 m-b-25">Earnings By Items</h2>
-                                <div class="table-responsive table--no-card m-b-40">
-                                    <table class="table table-borderless table-striped table-earning">
-                                        <thead>
-                                            <tr>
-                                                <th>Дата</th>
-                                                <th>Название</th>
-                                                <th class="text-right">Цена</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for ad in ads %}
-                                                <tr>
-                                                    <td>{{ ad.pub_date }}</td>
-                                                    <td>{{ ad.ad_title }}</td>
-                                                    <td class="text-right">$999.00</td>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
+                        {% for ad in ads %}
+                                <div class="row">
+                                    <div class="col-lg-9">
+                                        <h2 class="title-1 m-b-25">Earnings By Items</h2>
+                                        <div class="table-responsive table--no-card m-b-40">
+                                            <table class="table table-borderless table-striped table-earning">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Дата</th>
+                                                        <th>Название</th>
+                                                        <th class="text-right">Цена</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><a href="{{ ad.get_absolute_url }}">{{ ad.pub_date }}</a></td>
+                                                        <td><a href="{{ ad.get_absolute_url }}">{{ ad.ad_title }}</a></td>
+                                                        <td class="text-right">$999.00</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
