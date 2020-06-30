@@ -48,5 +48,13 @@ def userLogout(request):
 
 @unauthenticated_user
 def userAdmin(request):
+	user = request.user
+	favorite_posts = user.favorite.all()
 	ads = Ad.objects.filter(author=request.user)
-	return render(request, 'users/index.html', {'ads': ads})
+
+	context = {
+		'favorite_posts': favorite_posts,
+		'ads': ads,
+	}
+
+	return render(request, 'users/index.html', context)

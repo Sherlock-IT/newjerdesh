@@ -28,10 +28,12 @@
                         </div>
                         <div class="jobs_right">
                             <div class="apply_now">
-                                {% if is_favorite %}
-                                    <a class="heart_mark" href="{% url 'jerdesh:ad_favorite_url' slug=ad.slug %}"> <i class="fa fa-heart"></i> </a>
-                                {% else %}
-                                    <a class="heart_mark" href="{% url 'jerdesh:ad_favorite_url' slug=ad.slug %}"> <i class="ti-heart"></i> </a>
+                                {% if request.user.is_authenticated %}
+                                    {% if is_favorite %}
+                                        <a class="heart_mark" href="{% url 'jerdesh:ad_favorite_url' slug=ad.slug %}"> <i class="fa fa-heart"></i> </a>
+                                    {% else %}
+                                        <a class="heart_mark" href="{% url 'jerdesh:ad_favorite_url' slug=ad.slug %}"> <i class="ti-heart"></i> </a>
+                                    {% endif %}
                                 {% endif %}
                             </div>
                         </div>

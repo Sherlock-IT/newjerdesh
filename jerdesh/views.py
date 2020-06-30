@@ -27,7 +27,7 @@ class IndexPage(View):
 
 class AdList(View):
 	def get(self, request):
-		search_title 	= request.GET.get('search', '')
+		search_title = request.GET.get('search', '')
 
 		if search_title:
 			ads = Ad.objects.filter(ad_title__icontains=search_title)
@@ -63,7 +63,7 @@ class AdList(View):
 class AdCreate(CreateView):
 	subcategories = SubCategory.objects.all()
 	model = Ad
-	fields = ['city', 'ad_title', 'ad_text', 'img']
+	fields = ['city', 'category', 'ad_title', 'ad_text', 'img']
 
 	def get_form(self, form_class=None):
 		form = super(AdCreate, self).get_form(form_class)
@@ -79,9 +79,9 @@ class AdCreate(CreateView):
 		return ctx
 		
 	def form_valid(self, form):
-		new_ad = form.save()
-		new_ad.slug = '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
-		new_ad.author = self.request.user
+		new_ad 			= form.save()
+		new_ad.slug 	= '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
+		new_ad.author 	= self.request.user
 		for image in self.request.FILES.getlist('img'):
 			AdImage.objects.create(ad=new_ad, img=image)
 		new_ad.save()
@@ -91,7 +91,7 @@ class AdCreate(CreateView):
 class AdUpdate(UpdateView):
 	subcategories = SubCategory.objects.all()
 	model = Ad
-	fields = ['city', 'ad_title', 'ad_text', 'img']
+	fields = ['city', 'category', 'ad_title', 'ad_text', 'img']
 
 	def get_context_data(self, **kwargs):
 		ctx = super(AdUpdate, self).get_context_data(**kwargs)
@@ -127,7 +127,7 @@ class AdDetails(View):
 		}
 		return render(request, 'jerdesh/ad_details.html', context)
 
-	
+
 def favoriteAd(request, slug):
 	ad = Ad.objects.get(slug__iexact=slug)
 	if ad.favorite.filter(id=request.user.id).exists():

@@ -65,7 +65,16 @@
                                 <div class="Appointment">
                                     <div class="phone_num d-none d-xl-block">
                                         {% if request.user.is_authenticated %}
-                                            {{ request.user }}
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    {{ request.user }}
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                    <a class="dropdown-item" href="{% url 'users:user_admin_url' %}">Личный кабинет</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="{% url 'users:user_logout_url' %}">Выйти</a>
+                                                </div>
+                                            </li>
                                         {% else %}
                                             <a href="{% url 'users:user_authorization_url' %}">Войти</a>
                                             <a href="{% url 'users:user_registration_url' %}">Регистрация</a>
