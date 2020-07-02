@@ -42,6 +42,7 @@ def userRegistration(request):
 	return render(request, 'users/register.html', context)
 
 
+@unauthenticated_user
 def userLogout(request):
 	logout(request)
 	return redirect('jerdesh:index_url')
@@ -70,7 +71,7 @@ def userEdit(request):
 			return redirect('users:user_admin_url')
 		else:
 			form = EditProfileForm(instance=request.user)
-			message = 'Такой email уже существует'
+			message = 'Такой email или username уже существует'
 			return render(request, 'users/form.html', {'form': form, 'message': message})
 	else:
 		form = EditProfileForm(instance=request.user)

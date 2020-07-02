@@ -23,9 +23,11 @@
                 <div class="form-row">
                     {{ registration_form.password2 }}
                 </div>
-                {% for error in registration_form.errors %}
-                    <p style="color: red;">{{ error }}</p>
-                {% endfor %}
+                {% if registration_form.errors %}
+                        {% for k, v in registration_form.errors.items %}
+                            <b>{{ v }}</b>
+                        {% endfor %}
+                {% endif %}
                 <div class="form-row-last">
                     <input type="submit" name="register" class="register" value="Регистрация">
                 </div>

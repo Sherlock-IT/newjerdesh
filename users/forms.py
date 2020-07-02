@@ -9,6 +9,14 @@ class UserRegistrationForm(UserCreationForm):
 	class Meta:
 		model = Account
 		fields = ('email', 'username', 'password1', 'password2')
+		error_messages = {
+			'email' : {
+				'unique': 'Пользователь с таким email уже зарегистрирован'
+			},
+			'username' : {
+				'unique': 'Пользователь с таким username уже зарегистрирован'
+			}
+		}
 
 	def __init__(self, *args, **kwargs):
 		super(UserRegistrationForm, self).__init__(*args, **kwargs)
