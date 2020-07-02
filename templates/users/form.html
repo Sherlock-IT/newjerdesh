@@ -1,0 +1,53 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+      <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Личные данные
+                                    </div>
+                                    <div class="card-body card-block">
+                                        <form action="" method="post" class="form-horizontal">
+                                            {% csrf_token %}
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label class=" form-control-label">Email</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    {{ form.email }}
+                                                </div>
+                                                <div class="col col-md-3 mt-3">
+                                                    <label class=" form-control-label">Username</label>
+                                                </div>
+                                                <div class="col-12 col-md-9 mt-3">
+                                                    {{ form.username }}
+                                                </div>
+                                            </div>
+                                            {% if message %}
+                                                {{message}}
+                                            {% endif %}
+                                            <div class="card-footer">
+                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                    <i class="fa fa-dot-circle-o"></i> Изменить
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

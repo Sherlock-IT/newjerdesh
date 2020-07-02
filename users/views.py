@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 
 from jerdesh.models import Ad
 from .forms import UserRegistrationForm
+from .forms import EditProfileForm
 from .decorators import unauthenticated_user
 
 
@@ -58,3 +59,22 @@ def userAdmin(request):
 	}
 
 	return render(request, 'users/index.html', context)
+
+
+@unauthenticated_user
+def userEdit(request):
+	if request.method == 'POST':
+		form = EditProfileForm(request.POST, instance=request.user)
+		if form.is_valid():
+			form.save()
+			return redirect('users:user_admin_url')
+		else:
+			form = EditProfileForm(instance=request.user)
+			message = 'Такой email уже существует'
+			return render(request, 'users/form.html', {'form': form, 'message': message})
+	else:
+		form = EditProfileForm(instance=request.user)
+		context = {
+			'form': form,
+		}
+		return render(request, 'users/form.html', context)
