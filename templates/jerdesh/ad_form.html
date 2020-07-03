@@ -23,9 +23,13 @@
 				</div>
 				<div class="col-75">
 					<select id="category" name="category">
-						{% for category in subcategories %}
-							<optgroup label="{{ category.category }}">
-								<option value="{{ category.id }}">{{ category.subcategory_text }}</option>
+						{% for category in categories %}
+							<optgroup label="{{ category.category_text }}">
+								{% for subcategory in subcategories %}
+									{% if subcategory.parent.id == category.id %}
+										<option value="{{ subcategory.id }}">{{ subcategory.category_text }}</option>
+									{% endif %}
+								{% endfor %}
 							</optgroup>
 						{% endfor %}
 					</select>

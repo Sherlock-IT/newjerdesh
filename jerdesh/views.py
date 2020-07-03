@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Category, SubCategory, City, Ad, AdImage
+from .models import Category, City, Ad, AdImage
 
 
 class IndexPage(View):
@@ -61,7 +61,8 @@ class AdList(View):
 
 # CRUD
 class AdCreate(CreateView):
-	subcategories = SubCategory.objects.all()
+	categories = Category.objects.filter(parent=None)
+	subcategories = Category.objects.exclude(parent=None)
 	model = Ad
 	fields = ['city', 'category', 'ad_title', 'ad_text', 'img']
 
@@ -74,9 +75,10 @@ class AdCreate(CreateView):
 		return form
 
 	def get_context_data(self, **kwargs):
-		ctx = super(AdCreate, self).get_context_data(**kwargs)
-		ctx['subcategories'] = self.subcategories
-		return ctx
+		create = super(AdCreate, self).get_context_data(**kwargs)
+		create['categories'] = self.categories
+		create['subcategories'] = self.subcategories
+		return create
 		
 	def form_valid(self, form):
 		new_ad 			= form.save()
@@ -89,7 +91,7 @@ class AdCreate(CreateView):
 
 
 class AdUpdate(UpdateView):
-	subcategories = SubCategory.objects.all()
+	categories = Category.objects.all()
 	model = Ad
 	fields = ['city', 'category', 'ad_title', 'ad_text', 'img']
 

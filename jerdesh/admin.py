@@ -1,10 +1,9 @@
 from django.contrib import admin
 from django.utils import timezone
-from .models import Category, SubCategory, City, Ad, AdImage
+from .models import Category, City, Ad, AdImage
 
 
 admin.site.register(Category)
-admin.site.register(SubCategory)
 admin.site.register(City)
 
 
