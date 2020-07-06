@@ -42,8 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #Moduls
     'phonenumber_field',
+    'djmoney',
 ]
+
+CURRENCIES = ('RUB', )
 
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'KG'

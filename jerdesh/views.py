@@ -19,7 +19,7 @@ from .forms import AdForm
 class IndexPage(View):
 
 	def get(self, request, *args, **kwargs):
-		ads 			= Ad.objects.order_by('-pub_date')[:5]
+		ads 			= Ad.objects.order_by('-last_up')[:5]
 		categories		= Category.objects.all()
 		cities			= City.objects.all()
 		context = {

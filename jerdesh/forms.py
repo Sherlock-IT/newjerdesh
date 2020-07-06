@@ -6,7 +6,7 @@ class AdForm(forms.ModelForm):
     
     class Meta:
         model = Ad
-        fields = ('img', 'city', 'category', 'ad_title', 'ad_text', 'phone')
+        fields = ('img', 'city', 'category', 'ad_title', 'ad_text', 'price', 'phone')
 
     def __init__(self, request, *args, **kwargs):
         super(AdForm, self).__init__(*args, **kwargs)
