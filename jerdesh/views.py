@@ -91,18 +91,31 @@ class AdCreate(CreateView):
 
 
 class AdUpdate(UpdateView):
-	categories = Category.objects.all()
+	categories = Category.objects.filter(parent=None)
+	subcategories = Category.objects.exclude(parent=None)
 	model = Ad
 	fields = ['city', 'category', 'ad_title', 'ad_text', 'img']
 
-	def get_context_data(self, **kwargs):
-		ctx = super(AdUpdate, self).get_context_data(**kwargs)
-		ctx['subcategories'] = self.subcategories
-		return ctx
+	def get_form(self, form_class=None):
+		form = super(AdUpdate, self).get_form(form_class)
+		form.fields['ad_title'].widget.attrs['placeholder'] = 'Название объявления'
+		form.fields['ad_text'].widget.attrs['placeholder'] = 'Описание объявления'
+		form.fields['img'].widget = forms.FileInput(attrs={'multiple': 'multiple'})
+		form.fields['img'].widget.attrs['class'] = 'custom-file-input'
+		return form
 
+	def get_context_data(self, **kwargs):
+		create = super(AdUpdate, self).get_context_data(**kwargs)
+		create['categories'] = self.categories
+		create['subcategories'] = self.subcategories
+		return create
+		
 	def form_valid(self, form):
-		new_ad = form.save()
-		new_ad.slug = '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
+		new_ad 			= form.save()
+		new_ad.slug 	= '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
+		new_ad.author 	= self.request.user
+		for image in self.request.FILES.getlist('img'):
+			AdImage.objects.create(ad=new_ad, img=image)
 		new_ad.save()
 		return super(AdUpdate, self).form_valid(form)
 
