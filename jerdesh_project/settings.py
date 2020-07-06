@@ -41,8 +41,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'crispy_forms',
+=======
+
+    #Moduls
+    'phonenumber_field',
+    'djmoney',
+>>>>>>> f212e18bfbe9f05ffcb28ae0155d58c4a695a1e8
 ]
+
+CURRENCIES = ('RUB', )
+
+PHONENUMBER_DB_FORMAT = 'NATIONAL'
+PHONENUMBER_DEFAULT_REGION = 'KG'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

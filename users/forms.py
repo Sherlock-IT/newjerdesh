@@ -8,14 +8,18 @@ class UserRegistrationForm(UserCreationForm):
 
 	class Meta:
 		model = Account
-		fields = ('email', 'username', 'password1', 'password2')
+		fields = ('email', 'phone', 'username', 'password1', 'password2')
 		error_messages = {
 			'email' : {
 				'unique': 'Пользователь с таким email уже зарегистрирован'
 			},
 			'username' : {
 				'unique': 'Пользователь с таким username уже зарегистрирован'
-			}
+			},
+			'phone' : {
+				'invalid': 'Номер введен некорректно. Формат: "+996" или "0 номер"',
+				'unique': 'Пользователь с таким номером уже зарегистрирован'
+			},
 		}
 
 	def __init__(self, *args, **kwargs):
@@ -24,6 +28,10 @@ class UserRegistrationForm(UserCreationForm):
 		self.fields['email'].widget.attrs['class'] 				= 'input-text'
 		self.fields['email'].widget.attrs['id'] 				= 'your-email'
 		self.fields['email'].widget.attrs['placeholder'] 		= 'Ваш email'
+
+		self.fields['phone'].widget.attrs['class'] 				= 'input-text'
+		self.fields['phone'].widget.attrs['id'] 				= 'your-email'
+		self.fields['phone'].widget.attrs['placeholder'] 		= 'Номер телефона'
 
 		self.fields['username'].widget.attrs['class'] 			= 'input-text'
 		self.fields['username'].widget.attrs['id'] 				= 'full-name'
@@ -41,10 +49,23 @@ class UserRegistrationForm(UserCreationForm):
 class EditProfileForm(UserChangeForm):
 	class Meta:
 		model = Account
-		fields = ('email', 'username', 'password')
+		fields = ('email', 'phone', 'username', 'password')
+		error_messages = {
+			'email' : {
+				'unique': 'Пользователь с таким email уже зарегистрирован'
+			},
+			'username' : {
+				'unique': 'Пользователь с таким username уже зарегистрирован'
+			},
+			'phone' : {
+				'invalid': 'Номер введен некорректно. Формат: "+996" или "0 номер"',
+				'unique': 'Пользователь с таким номером уже зарегистрирован'
+			},
+		}
 	
 	def __init__(self, *args, **kwargs):
 		super(EditProfileForm, self).__init__(*args, **kwargs)
 
 		self.fields['email'].widget.attrs['class'] = 'form-control'
+		self.fields['phone'].widget.attrs['class'] = 'form-control'
 		self.fields['username'].widget.attrs['class'] = 'form-control'

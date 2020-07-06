@@ -71,8 +71,7 @@
                                                 </a>
                                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                                     <a class="dropdown-item" href="{% url 'users:user_admin_url' %}">Кабинет</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="{% url 'users:user_edit_url' %}">Личные данные</a>
+                                                    <a class="dropdown-item" href="{% url 'users:user_admin_url' %}#scroll">Избранное</a>
                                                     <div class="dropdown-divider"></div>
                                                     <a class="dropdown-item" href="{% url 'password_change' %}">Поменять пароль</a>
                                                     <div class="dropdown-divider"></div>
@@ -115,12 +114,12 @@
                         <div class="footer_widget wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
                             <div class="footer_logo">
                                 <a href="{% url 'jerdesh:index_url' %}">
-                                    <img src="{% static 'img/logo.png' %}" alt="">
+                                    <img src="{% static 'jerdesh/img/logo.png' %}" alt="">
                                 </a>
                             </div>
                             <p>
                                 itacademy@jerdesh.kg <br>
-                                +996 996 996 <br>
+                                +996 999 999 999 <br>
                                 115/1, Улица Ибраимова, Бишкек
                             </p>
                             <div class="socail_links">
@@ -148,33 +147,6 @@
                                 </ul>
                             </div>
 
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-md-6 col-lg-2">
-                        <div class="footer_widget wow fadeInUp" data-wow-duration="1.1s" data-wow-delay=".4s">
-                            <h3 class="footer_title">
-                                Компания
-                            </h3>
-                            <ul>
-                                <li><a href="#">О нас </a></li>
-                                <li><a href="#"> Ценообразование</a></li>
-                                <li><a href="#">Карьера</a></li>
-                                <li><a href="#">FAQ</a></li>
-                            </ul>
-
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-lg-3">
-                        <div class="footer_widget wow fadeInUp" data-wow-duration="1.2s" data-wow-delay=".5s">
-                            <h3 class="footer_title">
-                                Категории
-                            </h3>
-                            <ul>
-                                <li><a href="#">Дизайн и Креатив</a></li>
-                                <li><a href="#">Инженерное искусство</a></li>
-                                <li><a href="#">Маркетинг</a></li>
-                                <li><a href="#">Финансы</a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>

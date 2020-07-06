@@ -25,14 +25,22 @@
                                                     {{ form.email }}
                                                 </div>
                                                 <div class="col col-md-3 mt-3">
+                                                    <label class=" form-control-label">Номер</label>
+                                                </div>
+                                                <div class="col-12 col-md-9 mt-3">
+                                                    {{ form.phone }}
+                                                </div>
+                                                <div class="col col-md-3 mt-3">
                                                     <label class=" form-control-label">Username</label>
                                                 </div>
                                                 <div class="col-12 col-md-9 mt-3">
                                                     {{ form.username }}
                                                 </div>
                                             </div>
-                                            {% if message %}
-                                                {{message}}
+                                            {% if form.errors %}
+                                                {% for k, v in form.errors.items %}
+                                                    {{ v }}
+                                                {% endfor %}
                                             {% endif %}
                                             <div class="card-footer">
                                                 <button type="submit" class="btn btn-primary btn-sm">

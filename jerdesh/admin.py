@@ -7,11 +7,12 @@ admin.site.register(Category)
 admin.site.register(City)
 
 
-class AdImageAdmin(admin.StackedInline):
-	model = AdImage
+# class AdImageAdmin(admin.StackedInline):
+# 	model = AdImage
 
 
 @admin.register(Ad)
 class AdAdmin(admin.ModelAdmin):
-	inlines = [AdImageAdmin]
-	list_display = ['ad_title', 'ad_text', 'author', 'category', 'city', 'pub_date']
+	# inlines = [AdImageAdmin]
+	list_display = ('ad_title', 'ad_text', 'author', 'category', 'city', 'last_up')
+	readonly_fields = ('last_up', )

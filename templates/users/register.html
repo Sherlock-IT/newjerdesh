@@ -12,10 +12,13 @@
                 {% csrf_token %}
                 <h2>Регистрация</h2>
                 <div class="form-row">
-                    {{ registration_form.username }}
+                    {{ registration_form.email }}
                 </div>
                 <div class="form-row">
-                    {{ registration_form.email }}
+                    {{ registration_form.phone }}
+                </div>
+                <div class="form-row">
+                    {{ registration_form.username }}
                 </div>
                 <div class="form-row">
                     {{ registration_form.password1 }}

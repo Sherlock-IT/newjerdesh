@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 Django
 Pillow
+=======
+Django==3.0.7
+Pillow==7.1.2
+>>>>>>> f212e18bfbe9f05ffcb28ae0155d58c4a695a1e8

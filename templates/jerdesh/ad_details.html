@@ -26,6 +26,12 @@
                                 </div>
                             </div>
                         </div>
+                        {% if time %}
+                            <form action="{% url 'jerdesh:ad_up_url' ad.slug %}" method="POST">
+                                {% csrf_token %}
+                                <button class="btn btn-primary">Поднять</button>
+                            </form>
+                        {% endif %}
                         <div class="jobs_right">
                             <div class="apply_now">
                                 {% if request.user.is_authenticated %}
@@ -39,10 +45,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
 
                 <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -68,20 +70,12 @@
                     </a>
                 </div>
 
-
-
-
-
-
-
-
-
-
                 <div class="descript_wrap white-bg" style="word-wrap: break-word">
                     <div class="single_wrap">
                         <h4>Описание</h4>
                         <p>{{ ad.ad_text }}</p>
                     </div>
+                    {{ ad.price }}
                 </div>
                 <div class="apply_job_form white-bg">
                     <h4>Оставить комментарий</h4>
@@ -119,6 +113,7 @@
                     <div class="job_content">
                         <ul>
                             <li>Дата публикации: <span>{{ ad.pub_date }}</span></li>
+                            <li>Дата поднятия: <span>{{ ad.last_up }}</span></li>
                             <li>Местоположение: <span>{{ ad.city }}</span></li>
                         </ul>
                     </div>

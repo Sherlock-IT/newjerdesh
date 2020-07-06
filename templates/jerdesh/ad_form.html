@@ -64,10 +64,27 @@
 				</div>
 			</div>
 			<div class="row">
+				<div class="col-25">
+					Цена
+				</div>
+				<div class="col-75">
+					{{ form.price }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-25 mt-2">
+					<label>Номер телефона</label>
+				</div>
+				<div class="col-75 mt-3">
+					{{ form.phone }}
+				</div>
+			</div>
+			<br>
+			<div class="row">
 				<input type="submit" value="Submit">
 			</div>
 		</form>
-		{{form.errors}}
+		{{ form.errors }}
 	</div>
 
 </body>

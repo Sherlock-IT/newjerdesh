@@ -64,18 +64,15 @@ def userAdmin(request):
 
 @unauthenticated_user
 def userEdit(request):
+	context = {}
 	if request.method == 'POST':
 		form = EditProfileForm(request.POST, instance=request.user)
 		if form.is_valid():
 			form.save()
-			return redirect('users:user_admin_url')
+			return redirect(request.path_info)
 		else:
-			form = EditProfileForm(instance=request.user)
-			message = 'Такой email или username уже существует'
-			return render(request, 'users/form.html', {'form': form, 'message': message})
+			context['form'] = form
 	else:
 		form = EditProfileForm(instance=request.user)
-		context = {
-			'form': form,
-		}
-		return render(request, 'users/form.html', context)
+		context['form'] = form
+	return render(request, 'users/form.html', context)
