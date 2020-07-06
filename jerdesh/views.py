@@ -1,3 +1,5 @@
+from datetime import timedelta
+from django.utils import timezone
 from django import forms
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -10,11 +12,14 @@ from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Category, City, Ad, AdImage
+from .utils import AdCreateMixin, AdUpdateMixin
+from .forms import AdForm
 
 
 class IndexPage(View):
+
 	def get(self, request, *args, **kwargs):
-		ads 			= Ad.objects.order_by('id')[:5]
+		ads 			= Ad.objects.order_by('-pub_date')[:5]
 		categories		= Category.objects.all()
 		cities			= City.objects.all()
 		context = {
@@ -26,13 +31,14 @@ class IndexPage(View):
 
 
 class AdList(View):
+
 	def get(self, request):
 		search_title = request.GET.get('search', '')
 
 		if search_title:
 			ads = Ad.objects.filter(ad_title__icontains=search_title)
 		else:
-			ads = Ad.objects.all()
+			ads = Ad.objects.order_by('-last_up')
 
 		cities 			= City.objects.all()
 		paginator 		= Paginator(ads, 10)
@@ -60,51 +66,14 @@ class AdList(View):
 
 
 # CRUD
-class AdCreate(CreateView):
-	categories = Category.objects.filter(parent=None)
-	subcategories = Category.objects.exclude(parent=None)
+class AdCreate(AdCreateMixin):
 	model = Ad
-	fields = ['city', 'category', 'ad_title', 'ad_text', 'img']
-
-	def get_form(self, form_class=None):
-		form = super(AdCreate, self).get_form(form_class)
-		form.fields['ad_title'].widget.attrs['placeholder'] = 'Название объявления'
-		form.fields['ad_text'].widget.attrs['placeholder'] = 'Описание объявления'
-		form.fields['img'].widget = forms.FileInput(attrs={'multiple': 'multiple'})
-		form.fields['img'].widget.attrs['class'] = 'custom-file-input'
-		return form
-
-	def get_context_data(self, **kwargs):
-		create = super(AdCreate, self).get_context_data(**kwargs)
-		create['categories'] = self.categories
-		create['subcategories'] = self.subcategories
-		return create
-		
-	def form_valid(self, form):
-		new_ad 			= form.save()
-		new_ad.slug 	= '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
-		new_ad.author 	= self.request.user
-		for image in self.request.FILES.getlist('img'):
-			AdImage.objects.create(ad=new_ad, img=image)
-		new_ad.save()
-		return super(AdCreate, self).form_valid(form)
+	form_class = AdForm
 
 
-class AdUpdate(UpdateView):
-	categories = Category.objects.all()
+class AdUpdate(AdUpdateMixin):
 	model = Ad
-	fields = ['city', 'category', 'ad_title', 'ad_text', 'img']
-
-	def get_context_data(self, **kwargs):
-		ctx = super(AdUpdate, self).get_context_data(**kwargs)
-		ctx['subcategories'] = self.subcategories
-		return ctx
-
-	def form_valid(self, form):
-		new_ad = form.save()
-		new_ad.slug = '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
-		new_ad.save()
-		return super(AdUpdate, self).form_valid(form)
+	form_class = AdForm
 
 
 class AdDelete(DeleteView):
@@ -114,10 +83,15 @@ class AdDelete(DeleteView):
 
 
 class AdDetails(View):
+
 	def get(self, request, slug):
 		ad = Ad.objects.get(slug__iexact=slug)
 		images = AdImage.objects.filter(ad=ad)
+		time = False
 		is_favorite = False
+
+		if (ad.last_up + timedelta(hours=10)) < timezone.now():
+			time = True
 
 		if ad.favorite.filter(id=request.user.id).exists():
 			is_favorite = True
@@ -125,9 +99,22 @@ class AdDetails(View):
 		context = {
 			'ad': ad,
 			'images': images,
+			'time': time,
 			'is_favorite': is_favorite,
 		}
 		return render(request, 'jerdesh/ad_details.html', context)
+
+
+class AdUp(View):
+
+	def post(self, request, slug):
+		ad = Ad.objects.get(slug__iexact=slug)
+		if (ad.last_up + timedelta(hours=10)) < timezone.now():
+			ad.last_up = timezone.now()
+			ad.save()
+			return redirect(ad.get_absolute_url())
+		else:
+			return redirect('jerdesh:index_url')
 
 
 def favoriteAd(request, slug):
