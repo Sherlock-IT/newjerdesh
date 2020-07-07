@@ -31,7 +31,7 @@ class Ad(models.Model):
 	slug 				= models.SlugField(max_length=250)
 	ad_title 			= models.CharField(max_length=200, verbose_name='Название')
 	ad_text 			= models.TextField(verbose_name='Описание')
-	price 				= MoneyField(max_digits=14, decimal_places=0, default_currency='KGS')
+	price 				= MoneyField(max_digits=14, decimal_places=0, default_currency='RUB')
 	phone 				= PhoneNumberField(verbose_name='Номер телефона')
 	img 				= models.ImageField(upload_to='images/')
 	pub_date 			= models.DateTimeField(auto_now_add=True)

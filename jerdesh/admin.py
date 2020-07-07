@@ -15,4 +15,3 @@ admin.site.register(City)
 class AdAdmin(admin.ModelAdmin):
 	# inlines = [AdImageAdmin]
 	list_display = ('ad_title', 'ad_text', 'author', 'category', 'city', 'last_up')
-	readonly_fields = ('last_up', )

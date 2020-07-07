@@ -66,75 +66,14 @@ class AdList(View):
 
 
 # CRUD
-<<<<<<< HEAD
-class AdCreate(CreateView):
-	categories = Category.objects.filter(parent=None)
-	subcategories = Category.objects.exclude(parent=None)
-	model = Ad
-	fields = ['city', 'category', 'ad_title', 'ad_text', 'img']
-
-	def get_form(self, form_class=None):
-		form = super(AdCreate, self).get_form(form_class)
-		form.fields['ad_title'].widget.attrs['placeholder'] = 'Название объявления'
-		form.fields['ad_text'].widget.attrs['placeholder'] = 'Описание объявления'
-		form.fields['img'].widget = forms.FileInput(attrs={'multiple': 'multiple'})
-		form.fields['img'].widget.attrs['class'] = 'custom-file-input'
-		return form
-
-	def get_context_data(self, **kwargs):
-		create = super(AdCreate, self).get_context_data(**kwargs)
-		create['categories'] = self.categories
-		create['subcategories'] = self.subcategories
-		return create
-		
-	def form_valid(self, form):
-		new_ad 			= form.save()
-		new_ad.slug 	= '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
-		new_ad.author 	= self.request.user
-		for image in self.request.FILES.getlist('img'):
-			AdImage.objects.create(ad=new_ad, img=image)
-		new_ad.save()
-		return super(AdCreate, self).form_valid(form)
-
-
-class AdUpdate(UpdateView):
-	categories = Category.objects.filter(parent=None)
-	subcategories = Category.objects.exclude(parent=None)
-=======
 class AdCreate(AdCreateMixin):
->>>>>>> f212e18bfbe9f05ffcb28ae0155d58c4a695a1e8
 	model = Ad
 	form_class = AdForm
 
-<<<<<<< HEAD
-	def get_form(self, form_class=None):
-		form = super(AdUpdate, self).get_form(form_class)
-		form.fields['ad_title'].widget.attrs['placeholder'] = 'Название объявления'
-		form.fields['ad_text'].widget.attrs['placeholder'] = 'Описание объявления'
-		form.fields['img'].widget = forms.FileInput(attrs={'multiple': 'multiple'})
-		form.fields['img'].widget.attrs['class'] = 'custom-file-input'
-		return form
-
-	def get_context_data(self, **kwargs):
-		create = super(AdUpdate, self).get_context_data(**kwargs)
-		create['categories'] = self.categories
-		create['subcategories'] = self.subcategories
-		return create
-		
-	def form_valid(self, form):
-		new_ad 			= form.save()
-		new_ad.slug 	= '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
-		new_ad.author 	= self.request.user
-		for image in self.request.FILES.getlist('img'):
-			AdImage.objects.create(ad=new_ad, img=image)
-		new_ad.save()
-		return super(AdUpdate, self).form_valid(form)
-=======
 
 class AdUpdate(AdUpdateMixin):
 	model = Ad
 	form_class = AdForm
->>>>>>> f212e18bfbe9f05ffcb28ae0155d58c4a695a1e8
 
 
 class AdDelete(DeleteView):
