@@ -11,9 +11,6 @@
                 <div class="job_details_header">
                     <div class="single_jobs white-bg d-flex justify-content-between">
                         <div class="jobs_left d-flex align-items-center">
-                            <div class="thumb">
-                                <img src="{{ ad.img.url }}" alt="" width="60" height="60">
-                            </div>
                             <div class="jobs_conetent">
                                 <h4>{{ ad.ad_title }}</h4>
                                 <div class="links_locat d-flex align-items-center">
@@ -77,33 +74,6 @@
                     </div>
                     {{ ad.price }}
                 </div>
-                <div class="apply_job_form white-bg">
-                    <h4>Оставить комментарий</h4>
-                    <form action="#">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="input_field">
-                                    <input type="text" placeholder="Ваше имя">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input_field">
-                                    <input type="text" placeholder="Email">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="input_field">
-                                    <textarea name="#" id="" cols="30" rows="10" placeholder="Текст комментария"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="submit_btn">
-                                    <button class="boxed-btn3 w-100" type="submit">Оставить комментарий</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
             </div>
             <div class="col-lg-4">
                 <div class="job_sumary">
@@ -131,4 +101,12 @@
         </div>
     </div>
 </div>
+
+    {% if ad.author == request.user or request.user.is_superuser %}
+        <div class="admin-panel align-items-center">
+            <a href="" class="btn btn-light">Изменить</a>
+            <a href="" class="btn btn-danger">Удалить</a>
+        </div>
+    {% endif %}
+
 {% endblock %}

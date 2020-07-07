@@ -2,11 +2,17 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import FormView
+from django.contrib.auth import update_session_auth_hash
+from django.urls import reverse_lazy
 
 from jerdesh.models import Ad
 from .forms import UserRegistrationForm
 from .forms import EditProfileForm
+from .forms import ChangePasswordForm, ResetPasswordForm
 from .decorators import unauthenticated_user
+from .models import Account
 
 
 def userAuthorization(request):
@@ -76,3 +82,20 @@ def userEdit(request):
 		form = EditProfileForm(instance=request.user)
 		context['form'] = form
 	return render(request, 'users/form.html', context)
+
+
+# class PasswordChangeView(LoginRequiredMixin, FormView):
+# 	model = Account
+# 	form_class = ChangePasswordForm
+# 	template_name = 'registration/password_change_form.html'
+# 	success_url = reverse_lazy('users:password_change_done')
+
+# 	def get_form_kwargs(self):
+# 		kwargs = super(PasswordChangeView, self).get_form_kwargs()
+# 		kwargs['user'] = self.request.user
+# 		return kwargs
+
+# 	def form_valid(self, form):
+# 		form.save()
+# 		update_session_auth_hash(self.request, form.user)        
+# 		return super(PasswordChangeView, self).form_valid(form)

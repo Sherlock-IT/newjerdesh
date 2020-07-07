@@ -20,6 +20,7 @@
                 {% if message %}
                     <p style="color: red;">{{ message }}</p>
                 {% endif %}
+                <a href="{% url 'users:password_reset' %}">Забыли пароль?</a>
                 <div class="form-row-last">
                     <input type="submit" name="register" class="register" value="Войти">
                 </div>
