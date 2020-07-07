@@ -15,12 +15,20 @@ class Category(models.Model):
 	def __str__(self):
 		return self.category_text
 
+	class Meta:
+		verbose_name = 'Категория'
+		verbose_name_plural = 'Категории'
+
 
 class City(models.Model):
 	city_text = models.CharField(max_length=200)
 
 	def __str__(self):
 		return self.city_text
+
+	class Meta:
+		verbose_name = 'Город'
+		verbose_name_plural = 'Города'
 
 
 class Ad(models.Model):
@@ -31,7 +39,7 @@ class Ad(models.Model):
 	slug 				= models.SlugField(max_length=250)
 	ad_title 			= models.CharField(max_length=200, verbose_name='Название')
 	ad_text 			= models.TextField(verbose_name='Описание')
-	price 				= MoneyField(max_digits=14, decimal_places=0, default_currency='KGS')
+	price 				= MoneyField(max_digits=14, decimal_places=0, default_currency='RUB')
 	phone 				= PhoneNumberField(verbose_name='Номер телефона')
 	img 				= models.ImageField(upload_to='images/')
 	pub_date 			= models.DateTimeField(auto_now_add=True)
@@ -54,6 +62,8 @@ class Ad(models.Model):
 
 	class Meta:
 		ordering = ['-pub_date']
+		verbose_name = 'Объявление'
+		verbose_name_plural = 'Объявления'
 
 
 class AdImage(models.Model):

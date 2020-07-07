@@ -14,5 +14,6 @@ class AdForm(forms.ModelForm):
         self.fields['ad_text'].widget.attrs['placeholder'] = 'Описание объявления'
         self.fields['phone'].widget.attrs['placeholder'] = 'Номер телефона'
         self.fields['phone'].widget.attrs['value'] = request.user.phone
+        self.fields['price'].widget.attrs['value'] = 0
         self.fields['img'].widget = forms.FileInput(attrs={'multiple': 'multiple'})
         self.fields['img'].widget.attrs['class'] = 'custom-file-input'

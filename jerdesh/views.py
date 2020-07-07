@@ -22,6 +22,7 @@ class IndexPage(View):
 		ads 			= Ad.objects.order_by('-last_up')[:5]
 		categories		= Category.objects.all()
 		cities			= City.objects.all()
+
 		context = {
 			'ads': ads,
 			'categories': categories,
@@ -33,14 +34,17 @@ class IndexPage(View):
 class AdList(View):
 
 	def get(self, request):
-		search_title = request.GET.get('search', '')
+		search_title 	= request.GET.get('search', None)
+		search_city 	= request.GET.get('location', None)
+		search_category = request.GET.get('category', None)
 
-		if search_title:
-			ads = Ad.objects.filter(ad_title__icontains=search_title)
+		if search_title or search_city or search_category:
+			ads = Ad.objects.filter(ad_title__icontains=search_title, city_id=search_city, category_id=search_category)
 		else:
 			ads = Ad.objects.order_by('-last_up')
 
-		cities 			= City.objects.all()
+		categories		= Category.objects.all()
+		cities			= City.objects.all()
 		paginator 		= Paginator(ads, 10)
 		page_number 	= request.GET.get('page', 1)
 		page 			= paginator.get_page(page_number)
@@ -60,7 +64,9 @@ class AdList(View):
 			'ads': page,
 			'is_paginated': is_paginated,
 			'next_url': next_url,
-			'prev_url': prev_url
+			'prev_url': prev_url,
+			'categories': categories,
+			'cities': cities,
 		}
 		return render(request, 'jerdesh/ads_list.html', context)
 

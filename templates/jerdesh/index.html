@@ -1,5 +1,6 @@
 {% extends 'jerdesh/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}{% endblock %}
 
@@ -11,12 +12,35 @@
             <div class="row cat_search">
                 <div class="col-lg-3 col-md-4">
                     <div class="single_input">
-                        <input type="text" placeholder="Ключевое слово" name="search" required>
+                            <label>{% trans 'Ключевое слово' %}</label>
+                            <input type="text" name="search" required>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <div class="single_input">
+                        <label>{% trans 'Города' %}</label>
+                        <select class="wide" name="location">
+                            {% for city in cities %}
+                                <option value="{{ city.id }}">{{ city }}</option>
+                            {% endfor %}
+                          </select>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <div class="single_input">
+                        <label>{% trans 'Категории' %}</label>
+                        <select class="wide" name="category">
+                            {% for category in categories %}
+                                {% if category.parent != None %}
+                                    <option value="{{ category.id }}">{{ category }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-12">
                     <div class="job_btn">
-                        <button type="submit" class="btn btn-success">Искать</button>
+                        <button type="submit" class="btn btn-success">{% trans 'Искать' %}</button>
                     </div>
                 </div>
             </div>
@@ -32,12 +56,12 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <div class="section_title">
-                    <h3>Объявления</h3>
+                    <h3>{% trans 'Объявления' %}</h3>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="brouse_job text-right">
-                    <a href="{% url 'jerdesh:ads_list_url' %}" class="boxed-btn4">Больше объявлений</a>
+                    <a href="{% url 'jerdesh:ads_list_url' %}" class="boxed-btn4">{% trans 'Больше объявлений' %}</a>
                 </div>
             </div>
         </div>
@@ -53,15 +77,12 @@
                                     <div class="location">
                                         <p> <i class="fa fa-map-marker"></i>{{ ad.city }}</p>
                                     </div>
-                                    <div class="location">
-                                        <p> <i class="fa fa-clock-o"></i> Частичная занятость</p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="jobs_right">
                             <div class="apply_now">
-                                <a href="tel:{{ request.user.phone }}" class="boxed-btn3">Позвонить</a>
+                                <a href="tel:{{ ad.phone }}" class="boxed-btn3">{% trans 'Позвонить' %}</a>
                             </div>
                             <div class="date">
                                 <p>{{ ad.pub_date }}</p>
