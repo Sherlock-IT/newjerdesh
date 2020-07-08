@@ -22,10 +22,14 @@ class IndexPage(View):
 		ads 				= Ad.objects.order_by('-last_up')[:5]
 		categories			= Category.objects.all()
 		cities				= City.objects.all()
+		main_category		= Category.objects.filter(parent=None)
+		subcategory			= Category.objects.exclude(parent=None)
 
 		context = {
 			'ads': ads,
 			'categories': categories,
+			'main_category': main_category,
+			'subcategory': subcategory,
 			'cities': cities,
 		}
 		return render(request, 'jerdesh/index.html', context)

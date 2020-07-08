@@ -69,7 +69,6 @@
                         <h4>Описание</h4>
                         <p>{{ ad.ad_text }}</p>
                     </div>
-                    {{ ad.price }}
                 </div>
             </div>
             <div class="col-lg-4">
@@ -79,6 +78,7 @@
                             <li>Дата публикации: <span>{{ ad.pub_date }}</span></li>
                             <li>Дата поднятия: <span>{{ ad.last_up }}</span></li>
                             <li>Местоположение: <span>{{ ad.city }}</span></li>
+                            <li>Цена: <span><b>{{ ad.price }}</b></span></li>
                         </ul>
                     </div>
                 </div>
