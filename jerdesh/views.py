@@ -7,7 +7,7 @@ from django.utils.text import slugify
 from django.urls import reverse_lazy
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -19,9 +19,9 @@ from .forms import AdForm
 class IndexPage(View):
 
 	def get(self, request, *args, **kwargs):
-		ads 			= Ad.objects.order_by('-last_up')[:5]
-		categories		= Category.objects.all()
-		cities			= City.objects.all()
+		ads 				= Ad.objects.order_by('-last_up')[:5]
+		categories			= Category.objects.all()
+		cities				= City.objects.all()
 
 		context = {
 			'ads': ads,
@@ -69,6 +69,36 @@ class AdList(View):
 			'cities': cities,
 		}
 		return render(request, 'jerdesh/ads_list.html', context)
+
+
+class AdCategoryList(View):
+
+	def get(self, request, category_id):
+		
+		ads = Ad.objects.filter(category__id=category_id)
+
+		paginator 		= Paginator(ads, 10)
+		page_number 	= request.GET.get('page', 1)
+		page 			= paginator.get_page(page_number)
+		is_paginated 	= page.has_other_pages()
+
+		if page.has_previous():
+			prev_url = f'?page={page.previous_page_number()}'
+		else:
+			prev_url = ''
+
+		if page.has_next():
+			next_url = f'?page={page.next_page_number()}'
+		else:
+			next_url = ''
+
+		context = {
+			'ads': page,
+			'is_paginated': is_paginated,
+			'next_url': next_url,
+			'prev_url': prev_url,
+		}
+		return render(request, 'jerdesh/category_list.html', context)
 
 
 # CRUD

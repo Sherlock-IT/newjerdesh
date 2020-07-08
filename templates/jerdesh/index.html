@@ -12,8 +12,8 @@
             <div class="row cat_search">
                 <div class="col-lg-3 col-md-4">
                     <div class="single_input">
-                            <label>{% trans 'Ключевое слово' %}</label>
-                            <input type="text" name="search" required>
+                        <label>{% trans 'Ключевое слово' %}</label>
+                        <input type="text" name="search" required>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4">
@@ -21,9 +21,9 @@
                         <label>{% trans 'Города' %}</label>
                         <select class="wide" name="location">
                             {% for city in cities %}
-                                <option value="{{ city.id }}">{{ city }}</option>
+                            <option value="{{ city.id }}">{{ city }}</option>
                             {% endfor %}
-                          </select>
+                        </select>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4">
@@ -32,7 +32,7 @@
                         <select class="wide" name="category">
                             {% for category in categories %}
                                 {% if category.parent != None %}
-                                    <option value="{{ category.id }}">{{ category }}</option>
+                                <option value="{{ category.id }}">{{ category }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>
@@ -48,6 +48,27 @@
     </div>
 </div>
 <!--/ catagory_area -->
+
+<div class="card">
+    <div class="card-header">
+        <strong>Категории</strong>
+    </div>
+    <div class="card-body">
+        {% for category in categories %}
+            {% if category.parent == None %}
+                <b>{{ category }}</b><br>
+            {% endif %}
+            {% if category.parent != None %}
+                <a href="{% url 'jerdesh:categories_list_url' category.id %}">{{ category }}
+                    <span class="badge badge-primary">
+                        {{ category.ad_set.count }}
+                    </span>
+                </a>
+                <br>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
 
 <!-- job_listing_area_start  -->
 <div class="job_listing_area">
@@ -72,7 +93,9 @@
                     <div class="single_jobs white-bg d-flex justify-content-between">
                         <div class="jobs_left d-flex align-items-center">
                             <div class="jobs_conetent">
-                                <a href="{{ ad.get_absolute_url }}"><h4>{{ ad.ad_title }}</h4></a>
+                                <a href="{{ ad.get_absolute_url }}">
+                                    <h4>{{ ad.ad_title }}</h4>
+                                </a>
                                 <div class="links_locat d-flex align-items-center">
                                     <div class="location">
                                         <p> <i class="fa fa-map-marker"></i>{{ ad.city }}</p>
