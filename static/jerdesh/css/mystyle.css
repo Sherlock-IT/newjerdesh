@@ -4,16 +4,10 @@
   position: fixed;
   right: 50px;
   bottom: 30px;
-  opacity: 0.5;
   padding: 15px;
-  display: none;
-}
-
-.admin-panel:hover {
-	opacity: 1;
 }
 
 .admin-panel a {
-	display: block;
-	margin: 5px 0;
+  display: block;
+  margin: 5px 0;
 }

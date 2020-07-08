@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-07 13:28+0600\n"
+"POT-Creation-Date: 2020-07-07 20:46+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,68 +18,76 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: jerdesh_project/settings.py:63
+msgid "English"
+msgstr ""
+
+#: jerdesh_project/settings.py:64
+msgid "Russian"
+msgstr ""
+
 #: templates/jerdesh/base.html:59
 msgid "Главная"
 msgstr "Home"
 
-#: templates/jerdesh/base.html:60 templates/jerdesh/index.html:58
+#: templates/jerdesh/base.html:60 templates/jerdesh/index.html:59
 msgid "Объявления"
 msgstr "Ads"
 
-#: templates/jerdesh/base.html:74
+#: templates/jerdesh/base.html:78
 msgid "Кабинет"
 msgstr "Cabinet"
 
-#: templates/jerdesh/base.html:75
+#: templates/jerdesh/base.html:80
 msgid "Избранное"
 msgstr "Favorites"
 
-#: templates/jerdesh/base.html:77
+#: templates/jerdesh/base.html:83
 msgid "Поменять пароль"
 msgstr "Change password"
 
-#: templates/jerdesh/base.html:79
+#: templates/jerdesh/base.html:86
 msgid "Сбросить пароль"
 msgstr "Reset password"
 
-#: templates/jerdesh/base.html:81
+#: templates/jerdesh/base.html:89
 msgid "Выйти"
 msgstr "Logout"
 
-#: templates/jerdesh/base.html:85
+#: templates/jerdesh/base.html:93
 msgid "Войти"
 msgstr "Log in"
 
-#: templates/jerdesh/base.html:86
+#: templates/jerdesh/base.html:94
 msgid "Регистрация"
 msgstr "Sign up"
 
-#: templates/jerdesh/base.html:91 templates/jerdesh/base.html:93
+#: templates/jerdesh/base.html:100 templates/jerdesh/base.html:103
 msgid "Добавить объявление"
 msgstr "Add an ad"
 
-#: templates/jerdesh/index.html:14
+#: templates/jerdesh/index.html:15
 msgid "Ключевое слово"
 msgstr "Search keyword"
 
-#: templates/jerdesh/index.html:20
+#: templates/jerdesh/index.html:21
 msgid "Города"
 msgstr "Location"
 
-#: templates/jerdesh/index.html:30
+#: templates/jerdesh/index.html:31
 msgid "Категории"
 msgstr "Categories"
 
-#: templates/jerdesh/index.html:42
+#: templates/jerdesh/index.html:43
 msgid "Искать"
 msgstr "Search"
 
-#: templates/jerdesh/index.html:63
+#: templates/jerdesh/index.html:64
 #, fuzzy
 #| msgid "Объявления"
 msgid "Больше объявлений"
 msgstr "Ads"
 
-#: templates/jerdesh/index.html:84
+#: templates/jerdesh/index.html:85
 msgid "Позвонить"
 msgstr "Call"

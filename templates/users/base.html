@@ -44,29 +44,31 @@
 
 <body class="animsition">
     <div class="page-wrapper">
-        <!-- MENU SIDEBAR-->
-        <aside class="menu-sidebar d-none d-lg-block">
-            <div class="logo">
-                <a href="{% url 'jerdesh:index_url' %}">
-                    <img src="{% static 'jerdesh/img/logo.png' %}" alt="Cool Admin" />
-                </a>
-            </div>
-            <div class="menu-sidebar__content js-scrollbar1">
-                <nav class="navbar-sidebar">
-                    <ul class="list-unstyled navbar__list">
-                        <li>
-                            <a href="{% url 'users:user_admin_url' %}">
-                                <i class="fas fa-chart-bar"></i>Объявления</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'users:user_edit_url' %}">
-                                <i class="far fa-check-square"></i>Личные данные</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-        <!-- END MENU SIDEBAR-->
+        {% block menu %}
+            <!-- MENU SIDEBAR-->
+            <aside class="menu-sidebar d-none d-lg-block">
+                <div class="logo">
+                    <a href="{% url 'jerdesh:index_url' %}">
+                        <img src="{% static 'jerdesh/img/logo.png' %}" alt="Cool Admin" />
+                    </a>
+                </div>
+                <div class="menu-sidebar__content js-scrollbar1">
+                    <nav class="navbar-sidebar">
+                        <ul class="list-unstyled navbar__list">
+                            <li>
+                                <a href="{% url 'users:user_admin_url' %}">
+                                    <i class="fas fa-chart-bar"></i>Объявления</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'users:user_edit_url' %}">
+                                    <i class="far fa-check-square"></i>Личные данные</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+            <!-- END MENU SIDEBAR-->
+        {% endblock %}
 
             <!-- HEADER DESKTOP-->
             <header class="header-desktop">
