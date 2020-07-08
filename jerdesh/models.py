@@ -32,18 +32,18 @@ class City(models.Model):
 
 
 class Ad(models.Model):
-	category 			= models.ForeignKey(Category, on_delete=models.CASCADE, null=True, verbose_name='Категория')
-	city 				= models.ForeignKey(City, on_delete=models.CASCADE, null=True, verbose_name='Город')
-	author 				= models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Автор')
-	favorite			= models.ManyToManyField(User, blank=True, related_name='favorite', verbose_name='Избранное')
-	slug 				= models.SlugField(max_length=250)
-	ad_title 			= models.CharField(max_length=200, verbose_name='Название')
-	ad_text 			= models.TextField(verbose_name='Описание')
-	price 				= MoneyField(max_digits=14, decimal_places=0, default_currency='RUB')
-	phone 				= PhoneNumberField(verbose_name='Номер телефона')
-	img 				= models.ImageField(upload_to='images/')
-	pub_date 			= models.DateTimeField(auto_now_add=True)
-	last_up				= models.DateTimeField(default=datetime.now())
+	category 		= models.ForeignKey(Category, on_delete=models.CASCADE, null=True, verbose_name='Категория')
+	city 			= models.ForeignKey(City, on_delete=models.CASCADE, null=True, verbose_name='Город')
+	author 			= models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Автор')
+	favorite		= models.ManyToManyField(User, blank=True, related_name='favorite', verbose_name='Избранное')
+	slug 			= models.SlugField(max_length=250)
+	ad_title 		= models.CharField(max_length=200, verbose_name='Название')
+	ad_text 		= models.TextField(verbose_name='Описание')
+	price 			= MoneyField(max_digits=14, decimal_places=0, default_currency='RUB')
+	phone 			= PhoneNumberField(verbose_name='Номер телефона')
+	img 			= models.ImageField(upload_to='images/')
+	pub_date 		= models.DateTimeField(auto_now_add=True)
+	last_up			= models.DateTimeField(default=datetime.now())
 
 	def save(self):
 		super().save()
@@ -67,8 +67,8 @@ class Ad(models.Model):
 
 
 class AdImage(models.Model):
-	ad 					= models.ForeignKey(Ad, on_delete=models.CASCADE, default=None)
-	img 				= models.ImageField(upload_to='images/')
+	ad 		= models.ForeignKey(Ad, on_delete=models.CASCADE, default=None)
+	img 	= models.ImageField(upload_to='images/')
 
 	def save(self, *args, **kwargs):
 		super().save(*args, **kwargs)
