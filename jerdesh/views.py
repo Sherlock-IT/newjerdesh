@@ -126,7 +126,7 @@ class AdDetails(View):
 		time = False
 		is_favorite = False
 
-		if (ad.last_up + timedelta(hours=10)) < timezone.now():
+		if (ad.last_up + timedelta(minutes=1)) < timezone.now():
 			time = True
 
 		if ad.favorite.filter(id=request.user.id).exists():
@@ -145,7 +145,7 @@ class AdUp(View):
 
 	def post(self, request, slug):
 		ad = Ad.objects.get(slug__iexact=slug)
-		if (ad.last_up + timedelta(hours=10)) < timezone.now():
+		if (ad.last_up + timedelta(minutes=1)) < timezone.now():
 			ad.last_up = timezone.now()
 			ad.save()
 			return redirect(ad.get_absolute_url())
