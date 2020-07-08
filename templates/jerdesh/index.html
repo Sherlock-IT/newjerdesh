@@ -54,18 +54,19 @@
         <strong>Категории</strong>
     </div>
     <div class="card-body">
-        {% for category in categories %}
+        {% for category in main_category %}
             {% if category.parent == None %}
                 <b>{{ category }}</b><br>
             {% endif %}
-            {% if category.parent != None %}
-                <a href="{% url 'jerdesh:categories_list_url' category.id %}">{{ category }}
-                    <span class="badge badge-primary">
-                        {{ category.ad_set.count }}
-                    </span>
-                </a>
-                <br>
-            {% endif %}
+            {% for subcategories in subcategory %}
+                {% if subcategories.parent.id == category.id %}
+                    <a href="{% url 'jerdesh:categories_list_url' subcategories.id %}">{{ subcategories }}
+                        <span class="badge badge-primary">
+                            {{ subcategories.ad_set.count }}
+                        </span>
+                    </a><br>
+                {% endif %}
+            {% endfor %}
         {% endfor %}
     </div>
 </div>
