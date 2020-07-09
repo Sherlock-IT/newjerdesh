@@ -42,7 +42,7 @@ class AdList(View):
 		search_city 	= request.GET.get('location', None)
 		search_category = request.GET.get('category', None)
 
-		if search_title or search_city or search_category:
+		if search_title:
 			ads = Ad.objects.filter(ad_title__icontains=search_title, city_id=search_city, category_id=search_category)
 		else:
 			ads = Ad.objects.order_by('-last_up')
