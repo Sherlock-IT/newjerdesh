@@ -22,9 +22,7 @@ class AdCreateMixin(CreateView):
         new_ad 			= form.save()
         new_ad.slug 	= '-'.join(new_ad.ad_title.split()) + '-id-' + str(new_ad.id)
         new_ad.author 	= self.request.user
-        for image in self.request.FILES.getlist('img'):
-            AdImage.objects.create(ad=new_ad, img=image)
-        new_ad.save()
+        AdImage.objects.create(ad=new_ad, img=new_ad.img)
         return super(AdCreateMixin, self).form_valid(form)
 
 
