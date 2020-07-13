@@ -19,11 +19,11 @@ from .forms import AdForm
 class IndexPage(View):
 
 	def get(self, request, *args, **kwargs):
-		ads 				= Ad.objects.order_by('-last_up')[:5]
-		categories			= Category.objects.all()
-		cities				= City.objects.all()
-		main_category		= Category.objects.filter(parent=None)
-		subcategory			= Category.objects.exclude(parent=None)
+		ads = Ad.objects.order_by('-last_up')[:5]
+		categories = Category.objects.all()
+		cities = City.objects.all()
+		main_category = Category.objects.filter(parent=None)
+		subcategory	= Category.objects.exclude(parent=None)
 
 		context = {
 			'ads': ads,
@@ -38,8 +38,8 @@ class IndexPage(View):
 class AdList(View):
 
 	def get(self, request):
-		search_title 	= request.GET.get('search', None)
-		search_city 	= request.GET.get('location', None)
+		search_title = request.GET.get('search', None)
+		search_city = request.GET.get('location', None)
 		search_category = request.GET.get('category', None)
 
 		if search_title or search_city or search_category:
@@ -47,12 +47,12 @@ class AdList(View):
 		else:
 			ads = Ad.objects.order_by('-last_up')
 
-		categories		= Category.objects.all()
-		cities			= City.objects.all()
-		paginator 		= Paginator(ads, 10)
-		page_number 	= request.GET.get('page', 1)
-		page 			= paginator.get_page(page_number)
-		is_paginated 	= page.has_other_pages()
+		categories = Category.objects.all()
+		cities	= City.objects.all()
+		paginator = Paginator(ads, 5)
+		page_number = request.GET.get('page', 1)
+		page = paginator.get_page(page_number)
+		is_paginated = page.has_other_pages()
 
 		if page.has_previous():
 			prev_url = f'?page={page.previous_page_number()}'
@@ -81,10 +81,10 @@ class AdCategoryList(View):
 		
 		ads = Ad.objects.filter(category__id=category_id)
 
-		paginator 		= Paginator(ads, 10)
-		page_number 	= request.GET.get('page', 1)
-		page 			= paginator.get_page(page_number)
-		is_paginated 	= page.has_other_pages()
+		paginator = Paginator(ads, 10)
+		page_number = request.GET.get('page', 1)
+		page = paginator.get_page(page_number)
+		is_paginated = page.has_other_pages()
 
 		if page.has_previous():
 			prev_url = f'?page={page.previous_page_number()}'
@@ -130,7 +130,7 @@ class AdDetails(View):
 		time = False
 		is_favorite = False
 
-		if (ad.last_up + timedelta(minutes=1)) < timezone.now():
+		if (ad.last_up + timedelta(hours=10)) < timezone.now():
 			time = True
 
 		if ad.favorite.filter(id=request.user.id).exists():
@@ -149,7 +149,7 @@ class AdUp(View):
 
 	def post(self, request, slug):
 		ad = Ad.objects.get(slug__iexact=slug)
-		if (ad.last_up + timedelta(minutes=1)) < timezone.now():
+		if (ad.last_up + timedelta(hours=10)) < timezone.now():
 			ad.last_up = timezone.now()
 			ad.save()
 			return redirect(ad.get_absolute_url())
